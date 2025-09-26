@@ -1,0 +1,35 @@
+import { Product } from "@/types/product";
+import { ProductCard } from "./ProductCard";
+
+interface ProductGridProps {
+  products: Product[];
+  isFavorite: (productId: number) => boolean;
+  onToggleFavorite: (productId: number) => void;
+}
+
+export const ProductGrid = ({
+  products,
+  isFavorite,
+  onToggleFavorite,
+}: ProductGridProps) => {
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500 text-lg">No products found</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {products.map((product) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+          isFavorite={isFavorite(product.id)}
+          onToggleFavorite={onToggleFavorite}
+        />
+      ))}
+    </div>
+  );
+};
